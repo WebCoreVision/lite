@@ -18,4 +18,4 @@ jobs:
       - name: Run Docker commands
         run: |
           docker run honeygain/honeygain -tou-get
-          docker run honeygain/honeygain -tou-accept -email ${{ secrets.ACCOUNT_EMAIL }} -pass ${{ secrets.ACCOUNT_PASSWORD }} -device ${{ secrets.DEVICE_NAME }}
+          docker run honeygain/honeygain -tou-accept -email 480rigid@yogirt.com -pass Aman@1234567890 -device Aman
