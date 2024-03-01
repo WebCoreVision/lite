@@ -1,4 +1,4 @@
-name: Honeygain Docker Commands
+name: Get IP Address
 
 on:
   push:
@@ -9,13 +9,12 @@ on:
       - main
 
 jobs:
-  honeygain_commands:
+  get_ip_address:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Get public IP address
+        id: get_ip
+        run: echo "::set-output name=ip_address::$(curl -s https://api.ipify.org)"
 
-      - name: Run Docker commands
-        run: |
-          docker run honeygain/honeygain -tou-get
-          docker run honeygain/honeygain -tou-accept -email 480rigid@yogirt.com -pass Aman@1234567890 -device Aman
+      - name: Display IP address
+        run: echo "The public IP address is ${{ steps.get_ip.outputs.ip_address }}"
