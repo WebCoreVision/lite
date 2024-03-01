@@ -1,0 +1,21 @@
+name: Honeygain Docker Commands
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  honeygain_commands:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Docker commands
+        run: |
+          docker run honeygain/honeygain -tou-get
+          docker run honeygain/honeygain -tou-accept -email ${{ secrets.ACCOUNT_EMAIL }} -pass ${{ secrets.ACCOUNT_PASSWORD }} -device ${{ secrets.DEVICE_NAME }}
