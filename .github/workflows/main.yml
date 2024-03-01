@@ -1,4 +1,4 @@
-name: Get IP Address
+name: Get ISP Information
 
 on:
   push:
@@ -9,12 +9,18 @@ on:
       - main
 
 jobs:
-  get_ip_address:
+  get_isp_info:
     runs-on: ubuntu-latest
     steps:
       - name: Get public IP address
         id: get_ip
         run: echo "::set-output name=ip_address::$(curl -s https://api.ipify.org)"
 
-      - name: Display IP address
-        run: echo "The public IP address is ${{ steps.get_ip.outputs.ip_address }}"
+      - name: Retrieve ISP information
+        id: get_isp
+        run: |
+          isp_info=$(curl -s "https://ipinfo.io/${{ steps.get_ip.outputs.ip_address }}/json")
+          echo "::set-output name=isp::$(echo $isp_info | jq -r '.org')"
+
+      - name: Display ISP information
+        run: echo "The ISP is ${{ steps.get_isp.outputs.isp }}"
